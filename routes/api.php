@@ -24,10 +24,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/animals', [AnimalController::class, 'index']);
 
 //methode post
-Route::post('/animals', [AnimalController::class, 'post']);
+Route::post('/animals', [AnimalController::class, 'store']);
 
 //methode put
-Route::put('/animals/{id}', [AnimalController::class, "store"]);
+Route::put('/animals/{id}', [AnimalController::class, "update"]);
 
 //methode delete
 Route::delete('/animals/{id}', [AnimalController::class, "destroy"]);
@@ -40,3 +40,6 @@ Route::get("/student",[StudentController::class,"index"]);
 
 // Untuk menambahkan data
 Route::post("/student", [StudentController::class, "store"]);
+
+// Untuk mengupdate data siswa
+Route::put("/student/{id}", [StudentController::class, "update"]);

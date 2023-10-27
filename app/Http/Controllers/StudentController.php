@@ -40,4 +40,28 @@ class StudentController extends Controller
 
         return response()->json($data, 201);
     }
+
+    public function update(Request $request)
+    {
+        // cari student berdasarkan id
+        $id = [
+            'nama' => $request->nama,
+            'nim' => $request->nim,
+            'email' => $request->email,
+            'jurusan' => $request->jurusan
+        ];
+
+        $student = Student::update($request->$id);
+
+        $data = [
+            'message' => 'Data berhasil diubah',
+            'data' => $student,
+            ];
+
+            return response()->json($data, 200);
+
+
+       
+    }
+    
 }
