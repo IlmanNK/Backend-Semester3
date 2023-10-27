@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 class AnimalController extends Controller
 {
     // property animals0
-    public $animals = [];
+    public $animals = ['kambing','monyet'];
 
     // methode untuk menampilkan data hewan
     public function index()
     {
-        echo "menampilkan data animals";
+        echo "menampilkan data animals <br>";
 
         // loop property animals
         foreach($this->animals as $animal){
@@ -23,9 +23,9 @@ class AnimalController extends Controller
     // method untuk menambahkan data hewan
     public function store(Request $request)
     {
-        echo "Nama hewan: $request->nama";
+        // echo "Nama hewan: ";
         echo "<br>";
-        echo "untuk menambahkan hewan baru";
+        echo "untuk menambahkan hewan baru <br>";
 
         // menambahkan data ke property animals
         array_push($this->animals, $request->animal);
