@@ -22,13 +22,15 @@ class StudentController extends Controller
 
     public function store(Request $request)
     {
+        // menangkap data request
         $input = [
             'nama' => $request->nama,
             'nim' => $request->nim,
             'email' => $request->email,
-            'jurusan' => $request-> jurusan
+            'jurusan' => $request->jurusan
         ];
 
+        // menggunakan model Student untuk insert data
         $student = Student::create($input);
 
         $data = [

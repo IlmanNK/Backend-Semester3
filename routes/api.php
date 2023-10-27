@@ -35,7 +35,7 @@ Route::delete('/animals/{id}', [AnimalController::class, "destroy"]);
 
 
 // Untuk Student Pertemuan 5
-// student get all
+// Untuk menampilkan seluruh siswa
 Route::get("/student",[StudentController::class,"index"]);
 
 // Untuk menambahkan data
