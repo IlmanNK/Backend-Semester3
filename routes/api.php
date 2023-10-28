@@ -43,3 +43,6 @@ Route::post("/student", [StudentController::class, "store"]);
 
 // Untuk mengupdate data siswa
 Route::put("/student/{id}", [StudentController::class, "update"]);
+
+// untuk menghapus data siswa
+Route::delete("/student/{id}", [StudentController::class, "destroy"]);

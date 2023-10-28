@@ -41,27 +41,63 @@ class StudentController extends Controller
         return response()->json($data, 201);
     }
 
-    public function update(Request $request)
+    public function update($id, Request $request)
     {
-        // cari student berdasarkan id
-        $id = [
-            'nama' => $request->nama,
-            'nim' => $request->nim,
-            'email' => $request->email,
-            'jurusan' => $request->jurusan
-        ];
+        // menangkap id dari parameter
+        $student = Student::find($id);
+        // cek apakah ada student dengan id tersebut
+        if (!$student) {
+            $data = [
+                'message' => 'Data tidak ditemukan',
+            ];
+            return response()->json($data, 404);
+        }
 
-        $student = Student::update($request->$id);
+
+        // menangkap data request
+        $nama = $request->input('nama');
+        $nim = $request->input('nim');
+        $email = $request->input('email');
+        $jurusan = $request->input('jurusan');
+
+        // mengupdate nilai atribut pada student
+        $student->nama = $nama;
+        $student->nim = $nim;
+        $student->email = $email;
+        $student->jurusan = $jurusan;
+
+
+        //Menyimpan data yang telah diubah
+        $student->save();
 
         $data = [
-            'message' => 'Data berhasil diubah',
-            'data' => $student,
+            'message' => 'Data Berhasil Diubah',
+            'data' => $student
+        ];
+        return response()->json($data, 200);
+    }
+
+    public function destroy($id)
+
+    {
+        // mencari data siswa berdasarkan id
+        $student = Student::find($id);
+
+        // mengecek apakah data tersebut ada atau tidak
+        if (!$student) {
+            $data = [
+                'message' => 'Data tidak berhasil ditemukan',
             ];
 
-            return response()->json($data, 200);
+            return response()->json($data, 404);
+        }
 
+        // menghapus data siswa 
+        $student->delete();
 
-       
+        $data = [
+            'message' => 'Data berhasil dihapus',
+        ];
+        return response()->json($data, 200);
     }
-    
 }
