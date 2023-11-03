@@ -10,6 +10,7 @@ class StudentController extends Controller
     // Menampilkan data
     public function index()
     {
+    
         $student = Student::all();
 
         $data = [
@@ -53,18 +54,19 @@ class StudentController extends Controller
             return response()->json($data, 404);
         }
 
+        $student->update($request->all());
 
-        // menangkap data request
-        $nama = $request->input('nama');
-        $nim = $request->input('nim');
-        $email = $request->input('email');
-        $jurusan = $request->input('jurusan');
+        // // menangkap data request
+        // $nama = $request->input('nama');
+        // $nim = $request->input('nim');
+        // $email = $request->input('email');
+        // $jurusan = $request->input('jurusan');
 
-        // mengupdate nilai atribut pada student
-        $student->nama = $nama;
-        $student->nim = $nim;
-        $student->email = $email;
-        $student->jurusan = $jurusan;
+        // // mengupdate nilai atribut pada student
+        // $student->nama = $nama;
+        // $student->nim = $nim;
+        // $student->email = $email;
+        // $student->jurusan = $jurusan;
 
 
         //Menyimpan data yang telah diubah
@@ -98,6 +100,6 @@ class StudentController extends Controller
         $data = [
             'message' => 'Data berhasil dihapus',
         ];
-        return response()->json($data, 200);
+        return response()->json($data, 203);
     }
 }
