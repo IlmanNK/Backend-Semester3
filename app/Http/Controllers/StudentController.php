@@ -10,8 +10,17 @@ class StudentController extends Controller
     // Menampilkan data
     public function index()
     {
-    
+
         $student = Student::all();
+
+        // jika data kosong maka kirim status code 204
+        if ($student->isEmpty()) {
+            $data = [
+                "message" => "Resource is empty",
+            ];
+
+            return response()->json($data, 204);
+        }
 
         $data = [
             'message' => 'Get all Student',
@@ -21,8 +30,42 @@ class StudentController extends Controller
         return response()->json($data, 200);
     }
 
+    public function show($id)
+    {
+        // mencari data sesuai id yang diinginkan 
+        $student = Student::find($id);
+
+        if (!$student) {
+            $data = [
+                'message' => 'Data detail student tidak ditemukan',
+            ];
+
+            // mengembalikan data (json) dan kode 200
+            return response()->json($data, 404);
+        } else {
+
+            $data = [
+                "message" => "Detail Data Siswa ditemukan",
+                "data"=> $student,
+            ];
+    
+            // Mengembalikan data (json) dan kode 404
+            return response()->json($data, 200);
+        }
+
+    }
+
     public function store(Request $request)
     {
+
+        // memberi validasi untuk request
+        $request->validate([
+            "nama" => "required",
+            "nim" => "required",
+            "email" => "required|email",
+            "jurusan" => "required"
+        ]);
+
         // menangkap data request
         $input = [
             'nama' => $request->nama,
@@ -54,23 +97,19 @@ class StudentController extends Controller
             return response()->json($data, 404);
         }
 
-        $student->update($request->all());
+        // $student->update($request->all());
 
-        // // menangkap data request
-        // $nama = $request->input('nama');
-        // $nim = $request->input('nim');
-        // $email = $request->input('email');
-        // $jurusan = $request->input('jurusan');
-
-        // // mengupdate nilai atribut pada student
-        // $student->nama = $nama;
-        // $student->nim = $nim;
-        // $student->email = $email;
-        // $student->jurusan = $jurusan;
+        $student->update([
 
 
-        //Menyimpan data yang telah diubah
-        $student->save();
+
+            'nama' => $request->nama ?? $student->nama,
+            'nim' => $request->nim ?? $student->nim,
+            'email' => $request->email ?? $student->email,
+            'jurusan' => $request->jurusan ?? $student->jurusan
+        ]);
+
+
 
         $data = [
             'message' => 'Data Berhasil Diubah',
@@ -102,4 +141,5 @@ class StudentController extends Controller
         ];
         return response()->json($data, 203);
     }
+
 }
